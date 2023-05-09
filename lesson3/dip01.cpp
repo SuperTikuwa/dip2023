@@ -35,10 +35,18 @@ int main(int argc, const char *argv[])
     int max = Stats::max(grayImage);
     double avg = Stats::average(grayImage);
     int med = Stats::median(grayImage);
+    int mode = Stats::mode(grayImage);
+    double variance = Stats::variance(grayImage);
+    double stdev = Stats::stdev(grayImage);
+
     std::cout << "min:" << min << endl;
     std::cout << "max:" << max << endl;
     std::cout << "avg:" << avg << endl;
     std::cout << "med:" << med << endl;
+    std::cout << "mode:" << mode << endl;
+    std::cout << "var:" << variance << endl;
+    std::cout << "stdev:" << stdev << endl;
+
     cv::waitKey();
     return 0;
 }

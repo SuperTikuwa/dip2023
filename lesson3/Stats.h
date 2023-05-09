@@ -8,6 +8,7 @@
 #ifndef Stats_h
 #define Stats_h
 #include <opencv2/opencv.hpp> //OpenCV関連ヘッダ
+#include <math.h>
 
 namespace histogram
 { // Stats名前空間
@@ -155,6 +156,61 @@ namespace Stats
 		}
 
 		return median;
+	}
+
+	int mode(cv::Mat src)
+	{
+		std::vector<unsigned int> values(256);
+
+		for (int i = 0; i < src.rows; i++)
+		{
+			for (int j = 0; j < src.cols; j++)
+			{
+				unsigned char value = src.at<unsigned char>(i, j);
+				values[value]++;
+			}
+		}
+
+		unsigned int mode = 0;
+
+		for (int i = 0; i < values.size(); i++)
+		{
+			if (mode < values[i])
+			{
+				mode = values[i];
+			}
+		}
+
+		return mode;
+	}
+
+	double variance(cv::Mat src)
+	{
+		double variance = 0;
+
+		int avg = Stats::average(src);
+
+		for (int i = 0; i < src.rows; i++)
+		{
+			for (int j = 0; j < src.cols; j++)
+			{
+				unsigned char value = src.at<unsigned char>(i, j);
+				variance += pow(value - avg, 2);
+			}
+		}
+
+		int n = src.rows * src.cols;
+		variance /= n;
+
+		return variance;
+	}
+
+	double stdev(cv::Mat src)
+	{
+		double variance = Stats::variance(src);
+		double stdev = sqrt(variance);
+
+		return stdev;
 	}
 }
 
