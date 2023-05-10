@@ -9,6 +9,7 @@
 #define Stats_h
 #include <opencv2/opencv.hpp> //OpenCV関連ヘッダ
 #include <math.h>
+#include <math.h>
 
 namespace histogram
 { // Stats名前空間
