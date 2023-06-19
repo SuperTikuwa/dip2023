@@ -11,13 +11,9 @@ int main(int argc, const char *argv[])
 {
   // 画像読み込み
   cv::Mat sourceImage = cv::imread("images/source.jpg");
-  cv::Mat templateImage = cv::imread("images/big_image.png");
+  cv::Mat templateImage = cv::imread("images/template.png");
 
-  cv::Mat graySourceImage, grayTemplateImage;
-  cv::Mat binarySourceImage, binaryTemplateImage;
-  cv::
-
-      if (sourceImage.empty() || templateImage.empty())
+  if (sourceImage.empty() || templateImage.empty())
   {
     printf("File not found\n");
     exit(0);
@@ -30,12 +26,22 @@ int main(int argc, const char *argv[])
   cv::Rect resultRect(0, 0, templateImage.cols, templateImage.rows);
   double val;
 
-  cv::cvtColor(sourceImage, graySourceImage, cv::COLOR_BGR2GRAY);
-  cv::threshold(graySourceImage, binarySourceImage, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
-  cv::Sobel(binarySourceImage, )
+  // cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_SQDIFF);
+  // cv::minMaxLoc(resultImage, &val, NULL, &matchPoint, NULL);
 
-      cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_CCOEFF_NORMED);
-  cv::minMaxLoc(resultImage, NULL, &val, NULL, &matchPoint);
+  // cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_CCOEFF_NORMED);
+  // cv::minMaxLoc(resultImage, NULL, &val, NULL, &matchPoint);
+
+  for (int i = 0; i < sourceImage.rows - templateImage.rows; i++)
+  {
+    for (int j = 0; j < sourceImage.cols - templateImage.cols; j++)
+    {
+      cv::Rect cropRegion = cv::Rect(j, i, templateImage.cols, templateImage.rows);
+      cv::Mat cropImage = sourceImage(cropRegion);
+
+      cv::calcHist()
+    }
+  }
 
   // std::cout << maxVal << std::endl;
   std::cout << matchPoint << std::endl;
