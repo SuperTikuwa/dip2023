@@ -10,8 +10,8 @@ double colorRadius = 30.0;
 int main(int argc, const char *argv[])
 {
   // 画像読み込み
-  cv::Mat sourceImage = cv::imread("source.jpg");
-  cv::Mat templateImage = cv::imread("template.png");
+  cv::Mat sourceImage = cv::imread("images/source.jpg");
+  cv::Mat templateImage = cv::imread("images/template.png");
 
   if (sourceImage.empty() || templateImage.empty())
   {
@@ -22,12 +22,17 @@ int main(int argc, const char *argv[])
   // 出力画像
   cv::Mat resultImage(cv::Size(sourceImage.cols, sourceImage.rows), CV_8UC3);
   cv::Point matchPoint;
-  double maxVal;
   cv::Rect resultRect(0, 0, templateImage.cols, templateImage.rows);
+  double val;
 
-  cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_CCOEFF_NORMED);
-  cv::minMaxLoc(resultImage, NULL, &maxVal, NULL, &matchPoint);
+  cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_SQDIFF);
+  cv::minMaxLoc(resultImage, &val, NULL, &matchPoint, NULL);
 
+  // cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_CCOEFF_NORMED);
+  // cv::minMaxLoc(resultImage, NULL, &val, NULL, &matchPoint);
+
+  // std::cout << maxVal << std::endl;
+  std::cout << matchPoint << std::endl;
   resultRect.x = matchPoint.x;
   resultRect.y = matchPoint.y;
 

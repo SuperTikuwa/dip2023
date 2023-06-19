@@ -10,8 +10,8 @@ double colorRadius = 30.0;
 int main(int argc, const char *argv[])
 {
   // 画像読み込み
-  cv::Mat sourceImage = cv::imread("source.jpg");
-  cv::Mat templateImage = cv::imread("template.png");
+  cv::Mat sourceImage = cv::imread("images/source.jpg");
+  cv::Mat templateImage = cv::imread("images/template.png");
 
   if (sourceImage.empty() || templateImage.empty())
   {
@@ -23,15 +23,24 @@ int main(int argc, const char *argv[])
   cv::Mat resultImage(cv::Size(sourceImage.cols, sourceImage.rows), CV_8UC3);
   cv::Point matchPoint;
   cv::Rect resultRect(0, 0, templateImage.cols, templateImage.rows);
-  double maxVal;
+  double val;
 
   // cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_SQDIFF);
-  cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_CCOEFF_NORMED);
+  // cv::minMaxLoc(resultImage, &val, NULL, &matchPoint, NULL);
 
-  cv::minMaxLoc(resultImage, NULL, &maxVal, NULL, &matchPoint);
+  // cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_CCOEFF_NORMED);
+  // cv::minMaxLoc(resultImage, NULL, &val, NULL, &matchPoint);
 
-  std::cout << maxVal << std::endl;
+  for (int i = 0; i < sourceImage.rows - templateImage.rows; i++)
+  {
+    for (int j = 0; j < sourceImage.cols - templateImage.cols; j++)
+    {
+      sourceImage.at<cv::Vec3b>(i, j) = cv::Vec3b(0, 0, i % 255);
+    }
+  }
 
+  // std::cout << maxVal << std::endl;
+  std::cout << matchPoint << std::endl;
   resultRect.x = matchPoint.x;
   resultRect.y = matchPoint.y;
 
