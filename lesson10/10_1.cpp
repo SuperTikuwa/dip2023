@@ -1,12 +1,6 @@
 // g++ main.cpp -std=c++11 `pkg-config --cflags --libs opencv4`
 #include <opencv2/opencv.hpp>
 
-//! 位置空間フィルタの半径
-double posRadius = 50.0;
-
-//! 色空間フィルタの半径
-double colorRadius = 30.0;
-
 int main(int argc, const char *argv[])
 {
   // 画像読み込み
@@ -25,17 +19,20 @@ int main(int argc, const char *argv[])
   cv::Rect resultRect(0, 0, templateImage.cols, templateImage.rows);
   double val;
 
+  // テンプレートマッチング
   cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_SQDIFF);
+
+  // 最小値とその位置を取得
   cv::minMaxLoc(resultImage, &val, NULL, &matchPoint, NULL);
 
   // cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_CCOEFF_NORMED);
   // cv::minMaxLoc(resultImage, NULL, &val, NULL, &matchPoint);
 
-  // std::cout << maxVal << std::endl;
-  std::cout << matchPoint << std::endl;
+  // マッチング位置の指定
   resultRect.x = matchPoint.x;
   resultRect.y = matchPoint.y;
 
+  // 矩形の描画
   cv::rectangle(sourceImage, resultRect, cv::Scalar(0, 0, 255), 3);
 
   cv::imshow("Source", sourceImage);
