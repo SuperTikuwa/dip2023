@@ -66,7 +66,6 @@ int main(int argc, const char *argv[])
   cv::imshow("EdgeSource", edgeSourceImage);
   cv::imshow("NormalizedSource", normalizedSourceImage);
   cv::imshow("EdgeTemplate", edgeTemplateImage);
-  cv::imshow("Result", resultImage);
 
   cv::waitKey(0);
 

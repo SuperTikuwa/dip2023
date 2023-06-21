@@ -4,8 +4,8 @@
 int main(int argc, const char *argv[])
 {
   // 画像読み込み
-  cv::Mat sourceImage = cv::imread("images/source.jpg");
-  cv::Mat templateImage = cv::imread("images/template.png");
+  cv::Mat sourceImage = cv::imread("images/find_wally.jpg");
+  cv::Mat templateImage = cv::imread("images/wally.png");
 
   if (sourceImage.empty() || templateImage.empty())
   {
