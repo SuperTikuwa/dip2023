@@ -28,7 +28,6 @@ int main(int argc, const char *argv[])
   cv::Mat tmpImage;
 
   // 入力画像の距離変換画像を作成
-
   // 画像のグレースケール化&二値化
   cv::cvtColor(sourceImage, graySourceImage, cv::COLOR_BGR2GRAY);
   cv::threshold(graySourceImage, binarySourceImage, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
@@ -49,11 +48,10 @@ int main(int argc, const char *argv[])
   cv::cvtColor(templateImage, grayTemplateImage, cv::COLOR_BGR2GRAY);
   cv::threshold(grayTemplateImage, binaryTemplateImage, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
   // ソーベルフィルタでエッジ抽出
-  cv::Sobel(binaryTemplateImage, tmpImage, -1, 1, 1, 3);
-  cv::convertScaleAbs(tmpImage, edgeTemplateImage, 1, 0);
+  cv::Sobel(binaryTemplateImage, edgeTemplateImage, -1, 1, 1, 3);
 
   // 距離変換画像とテンプレート画像のエッジ画像でマッチング
-  cv::matchTemplate(normalizedSourceImage, edgeTemplateImage, resultImage, cv::TM_CCOEFF_NORMED);
+  cv::matchTemplate(normalizedSourceImage, edgeTemplateImage, resultImage, cv::TM_CCORR);
   cv::minMaxLoc(resultImage, &val, NULL, &matchPoint, NULL);
 
   resultRect.x = matchPoint.x;

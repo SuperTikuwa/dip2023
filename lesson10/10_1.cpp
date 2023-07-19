@@ -19,14 +19,14 @@ int main(int argc, const char *argv[])
   cv::Rect resultRect(0, 0, templateImage.cols, templateImage.rows);
   double val;
 
-  // テンプレートマッチング
-  cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_SQDIFF);
+  // // テンプレートマッチング
+  // cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_SQDIFF);
 
-  // 最小値とその位置を取得
-  cv::minMaxLoc(resultImage, &val, NULL, &matchPoint, NULL);
+  // // 最小値とその位置を取得
+  // cv::minMaxLoc(resultImage, &val, NULL, &matchPoint, NULL);
 
-  // cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_CCOEFF_NORMED);
-  // cv::minMaxLoc(resultImage, NULL, &val, NULL, &matchPoint);
+  cv::matchTemplate(sourceImage, templateImage, resultImage, cv::TM_CCOEFF_NORMED);
+  cv::minMaxLoc(resultImage, NULL, &val, NULL, &matchPoint);
 
   // マッチング位置の指定
   resultRect.x = matchPoint.x;
